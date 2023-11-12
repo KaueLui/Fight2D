@@ -14,12 +14,10 @@ class Character{
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
-    update(){
-
-        //this.velocity.y += gravity
-
-        if( this.position.y+this.height >= canvas.height){
-            this.velocity.y = canvas.height - (this.position.y+this.height)
+    update() {
+        if (this.position.y+this.height > canvas.height) {
+            this.position.y = canvas.height-this.height
+            this.velocity.y = 0
         } else{
             this.velocity.y += gravity
         }
@@ -31,7 +29,36 @@ class Character{
     }
 }
 
-const player = new Character({
+class Fight extends Character {
+    constructor({
+        position,
+        velocity,
+        dimensions
+    }) {
+        super({
+            position,
+            velocity,
+            dimensions
+        })
+
+        this.velocity = velocity
+        this.width = dimensions.width
+        this.height = dimensions.height
+
+        this.lastKeyPressed
+
+        
+    }
+
+}
+
+
+
+
+
+
+// Jogador 1
+const player = new Fight({
     position: {
         x: 100,
         y: 100
@@ -42,6 +69,22 @@ const player = new Character({
     },
     dimensions:{
         width: 50,
+        height: 150
+    }
+})
+
+//Jogador 2
+const player2 = new Fight({
+    position: {
+        x: 500,
+        y: 150
+    },
+    velocity:{
+        x: 0,
+        y: 0
+    },
+    dimensions:{
+        width: 100,
         height: 150
     }
 })
