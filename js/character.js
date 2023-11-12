@@ -1,4 +1,4 @@
-const gravity = 0.1
+const gravity = 0.9
 
 
 class Character{
@@ -9,23 +9,38 @@ class Character{
         this.height = dimensions.height
     }
 
-    draw(){
+    draw() {
         ctx.fillStyle = "white"
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 
     update() {
+       
+       
+       
+        if (Math.ceil(this.position.y+this.height >= canvas.height)){
+            this.onGround = true
+        } else {
+            this.onGround = false
+        }
+       
+       
         if (this.position.y+this.height > canvas.height) {
             this.position.y = canvas.height-this.height
             this.velocity.y = 0
         } else{
-            this.velocity.y += gravity
+            if (!this.onGround) this.velocity.y += gravity
         }
 
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
         this.draw()
+    }
+
+    jump() {
+        if (!this.onGround) return
+        this.velocity.y -= 16
     }
 }
 
@@ -47,6 +62,8 @@ class Fight extends Character {
 
         this.lastKeyPressed
 
+        this.onGround
+
         
     }
 
@@ -56,7 +73,7 @@ class Fight extends Character {
 
 
 
-
+// Jogador
 // Jogador 1
 const player = new Fight({
     position: {
